@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "node"
+  - "12"
+  - "10"
+services:
+  - mongodb
+before_install:
+  - npm install -g npm@latest
+install:
+  - npm install --dev
+script:
+  - npm test
+after_success: npm run coverage
