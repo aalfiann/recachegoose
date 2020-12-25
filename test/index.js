@@ -3,7 +3,7 @@
 require('should');
 
 const mongoose = require('mongoose');
-const cachegoose = require('../out');
+const cachegoose = require('../dist');
 const Schema = mongoose.Schema;
 
 let RecordSchema;
