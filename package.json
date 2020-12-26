@@ -1,6 +1,6 @@
 {
   "name": "recachegoose",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "Mongoose caching that actually works.",
   "main": "index.js",
   "directories": {
@@ -51,7 +51,7 @@
   "author": "Bob Lauer <rlauer@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/boblauer/cachegoose/issues"
+    "url": "https://github.com/aalfiann/recachegoose/issues"
   },
-  "homepage": "https://github.com/boblauer/cachegoose"
+  "homepage": "https://github.com/aalfiann/recachegoose"
 }
