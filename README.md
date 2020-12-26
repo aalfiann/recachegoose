@@ -5,7 +5,7 @@
 - Up to date
 - Replace [cacheman](https://github.com/cayasso/cacheman) with [recacheman](https://github.com/aalfiann/recacheman)
 
-# cachegoose #
+# recachegoose #
 
 #### Mongoose caching that actually works. ####
 

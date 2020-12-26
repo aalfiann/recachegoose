@@ -1,6 +1,6 @@
 {
   "name": "recachegoose",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "Mongoose caching that actually works.",
   "main": "index.js",
   "directories": {
@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "brace-expansion": "^1.1.8",
-    "cacheman-redis": "^1.1.2",
     "jsosort": "0.0.0",
     "recacheman": "^2.2.2",
+    "recacheman-redis": "^2.1.1",
     "sha1": "^1.1.1"
   },
   "peerDependencies": {
