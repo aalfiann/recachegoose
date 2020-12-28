@@ -1,14 +1,12 @@
 {
   "name": "recachegoose",
-  "version": "8.0.6",
+  "version": "8.0.7",
   "description": "Mongoose caching that actually works.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "brace-expansion": "^1.1.8",
-    "jsosort": "0.0.0",
     "recacheman": "^2.2.4",
     "recacheman-redis": "^2.1.4",
     "sha1": "^1.1.1"
