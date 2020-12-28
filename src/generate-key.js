@@ -3,11 +3,11 @@
 const sha1 = require('sha1');
 
 function jsosort(obj, sortfunction) {
-  var result = {};
-  var key = Object.keys(obj).sort(sortfunction);
-  var keylength = key.length;
-  for( var i = 0; i < keylength; i++) {
-    var value = obj[key[i]];
+  const result = {};
+  const key = Object.keys(obj).sort(sortfunction);
+  const keylength = key.length;
+  for( let i = 0; i < keylength; i++) {
+    let value = obj[key[i]];
     if (Object.prototype.toString.call(value) === '[object Object]') {
       value = jsosort(value, sortfunction);
     }
