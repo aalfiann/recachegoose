@@ -37,7 +37,7 @@ module.exports = function (mongoose, cache) {
             if (Array.isArray(cachedResults)) {
               const l = cachedResults.length;
 
-              for (var i = 0; i < l; i++) {
+              for (let i = 0; i < l; i++) {
                 cachedResults[i] = hydrateModel(constructor)(cachedResults[i]);
               }
             } else {

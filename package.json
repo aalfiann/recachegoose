@@ -27,7 +27,7 @@
     "should": "^13.2.1"
   },
   "scripts": {
-    "test": "npm run build && nyc --reporter=html --reporter=text mocha --exit",
+    "test": "npm run lint && npm run build && nyc --reporter=html --reporter=text mocha --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
     "build": "babel src --out-dir dist",

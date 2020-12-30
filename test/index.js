@@ -383,7 +383,7 @@ function getAll(ttl, cb) {
 
 function aggregateAll(ttl, cb) {
   return Record.aggregate([
-    { $match: {}},
+    { $match: {} }
   ])
     .cache(ttl)
     .exec(cb);

@@ -18,7 +18,7 @@ function recoverObjectId(mongoose) {
       return data;
     }
 
-    data._id = mongoose.Types.ObjectId(data._id);
+    data._id = new mongoose.Types.ObjectId(data._id);
     return data;
   };
 }
