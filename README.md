@@ -23,28 +23,57 @@
 
 A Mongoose caching module that works exactly how you would expect it to, with the latest version of Mongoose.
 
-```
-Important:
+> Important:  
+  If you are using Mongoose 4.x or below, you have to use original [cachegoose](https://github.com/boblauer/cachegoose) and use version <= 4.x of it.
 
-If you are using Mongoose 4.x or below, you need to use version <= 4.x of this library.
-```
+
 
 ## Usage ##
 
+- Use In Memory
 ```javascript
 var mongoose = require('mongoose');
 var cachegoose = require('recachegoose');
 
 cachegoose(mongoose, {
-  engine: 'redis',    /* If you don't specify the redis engine,      */
-  port: 6379,         /* the query results will be cached in memory. */
+  engine: 'memory'
+});
+```
+
+- Use File
+```javascript
+var mongoose = require('mongoose');
+var cachegoose = require('recachegoose');
+
+cachegoose(mongoose, {
+  engine: 'file'
+});
+```
+
+- Use Redis
+```javascript
+var mongoose = require('mongoose');
+var cachegoose = require('recachegoose');
+
+cachegoose(mongoose, {
+  engine: 'redis',
+  port: 6379,
   host: 'localhost'
 });
 
+// or with redis connection string
+cachegoose(mongoose, {
+  engine: 'redis',
+  client: require('redis').createClient('redis://localhost:6379')
+});
+```
+
+- Set Cache
+```js
 Record
   .find({ some_condition: true })
   .cache(30) // The number of seconds to cache the query.  Defaults to 60 seconds.
-  .exec(function(err, records) {
+  .exec(function(err, records) { // You are able to use callback or promise
     ...
   });
 
@@ -60,15 +89,6 @@ Record
 You can also pass a custom key into the `.cache()` method, which you can then use later to clear the cached content.
 
 ```javascript
-var mongoose = require('mongoose');
-var cachegoose = require('recachegoose');
-
-cachegoose(mongoose, {
-  engine: 'redis',
-  port: 6379,
-  host: 'localhost'
-});
-
 var userId = '1234567890';
 
 Children
