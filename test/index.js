@@ -14,7 +14,7 @@ describe('cachegoose', () => {
   before((done) => {
     cachegoose(mongoose);
 
-    mongoose.connect('mongodb://127.0.0.1/mongoose-cachegoose-testing');
+    mongoose.connect('mongodb://127.0.0.1/mongoose-cachegoose-testing', { useNewUrlParser: true, useUnifiedTopology: true });
     db = mongoose.connection;
 
     db.on('error', done);
@@ -37,7 +37,7 @@ describe('cachegoose', () => {
   });
 
   afterEach((done) => {
-    Record.remove(() => {
+    Record.deleteMany(() => {
       cachegoose.clearCache(null, done);
     });
   });
@@ -164,7 +164,7 @@ describe('cachegoose', () => {
     const res = await getWithLimit(5, 60);
     res.length.should.equal(5);
 
-    await Record.remove();
+    await Record.deleteMany();
 
     const cached = await getWithLimit(5, 60);
     cached.length.should.equal(5);
@@ -189,7 +189,7 @@ describe('cachegoose', () => {
     const one = await getOne(60);
     Boolean(one).should.be.true;
 
-    await Record.remove();
+    await Record.deleteMany();
 
     const cachedOne = await getOne(60);
     Boolean(cachedOne).should.be.true;
@@ -286,7 +286,7 @@ describe('cachegoose', () => {
   });
 
   it('should cache a count query with zero results', async () => {
-    await Record.remove();
+    await Record.deleteMany();
 
     const res = await count(60);
     res.should.equal(0);
@@ -307,7 +307,7 @@ describe('cachegoose', () => {
   });
 
   it('should cache a countDocuments query with zero results', async () => {
-    await Record.remove();
+    await Record.deleteMany();
 
     const res = await countDocuments(60);
     res.should.equal(0);
@@ -328,7 +328,7 @@ describe('cachegoose', () => {
   });
 
   it('should cache a estimatedDocumentCount query with zero results', async () => {
-    await Record.remove();
+    await Record.deleteMany();
 
     const res = await estimatedDocumentCount(60);
     res.should.equal(0);
@@ -351,10 +351,42 @@ describe('cachegoose', () => {
     const diffSort = await getAllSorted({ num: -1 });
     diffSort.length.should.equal(20);
   });
+
+  it('should return similar _id in cached array result for lean', async () => {
+    const originalRes = await getAllLean(60);
+    const cachedRes = await getAllLean(60);
+    const originalConstructor = originalRes[0]._id.constructor.name.should;
+    const cachedConstructor = cachedRes[0]._id.constructor.name.should;
+    originalConstructor.should.deepEqual(cachedConstructor);
+  });
+
+  it('should return similar _id in one cached result for lean', async () => {
+    const originalRes = await getOneLean(60);
+    const cachedRes = await getOneLean(60);
+    const originalConstructor = originalRes._id.constructor.name.should;
+    const cachedConstructor = cachedRes._id.constructor.name.should;
+    originalConstructor.should.deepEqual(cachedConstructor);
+  });
+
+  it('should return similar _id in cached array result for aggregate', async () => {
+    const originalRes = await aggregateAll(60);
+    const cachedRes = await aggregateAll(60);
+    const originalConstructor = originalRes[0]._id.constructor.name.should;
+    const cachedConstructor = cachedRes[0]._id.constructor.name.should;
+    originalConstructor.should.deepEqual(cachedConstructor);
+  });
 });
 
 function getAll(ttl, cb) {
   return Record.find({}).cache(ttl).exec(cb);
+}
+
+function aggregateAll(ttl, cb) {
+  return Record.aggregate([
+    { $match: {}},
+  ])
+    .cache(ttl)
+    .exec(cb);
 }
 
 function getAllCustomKey(ttl, key, cb) {
@@ -371,6 +403,10 @@ function getAllLean(ttl, cb) {
 
 function getOne(ttl, cb) {
   return Record.findOne({ num: { $gt: 2 } }).cache(ttl).exec(cb);
+}
+
+function getOneLean(ttl, cb) {
+  return Record.findOne({ num: { $gt: 2 } }).lean().cache(ttl).exec(cb);
 }
 
 function getWithSkip(skip, ttl, cb) {
@@ -407,9 +443,10 @@ function getAllSorted(sortObj) {
 }
 
 function count(ttl, cb) {
+  // collection.count was deprecated in new mongoose version, so we change it with countDocuments
   return Record.find({})
     .cache(ttl)
-    .count()
+    .countDocuments()
     .exec(cb);
 }
 function countDocuments(ttl, cb) {
