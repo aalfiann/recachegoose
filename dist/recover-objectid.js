@@ -14,11 +14,12 @@ module.exports = function (mongoose, cachedResults) {
 
 function recoverObjectId(mongoose) {
   return data => {
-    if (!data._id) {
-      return data;
-    }
-
-    data._id = new mongoose.Types.ObjectId(data._id);
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+      if ( typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value) ) {
+        data[key] = new mongoose.Types.ObjectId(value);
+      }
+    });
     return data;
   };
 }
