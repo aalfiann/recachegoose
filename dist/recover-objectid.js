@@ -1,5 +1,7 @@
 'use strict';
 
+const ObjectId = require('mongoose').Types.ObjectId;
+
 module.exports = function (mongoose, cachedResults) {
   if (Array.isArray(cachedResults)) {
     const l = cachedResults.length;
@@ -12,13 +14,17 @@ module.exports = function (mongoose, cachedResults) {
   return recoverObjectId(mongoose)(cachedResults);
 };
 
+function isValidObjectId(id) {
+  return ObjectId.isValid(id) && new ObjectId(id).toString() === id;
+}
+
 function recoverObjectId(mongoose) {
   return data => {
-    if (!data._id) {
+    if (!isValidObjectId(data._id)) {
       return data;
     }
 
-    data._id = new mongoose.Types.ObjectId(data._id);
+    data._id = new ObjectId(data._id);
     return data;
   };
 }
