@@ -3,7 +3,6 @@
 require('should');
 
 const mongoose = require('mongoose');
-const mongodb = require('mongodb');
 const cachegoose = require('../dist');
 const Schema = mongoose.Schema;
 
@@ -22,7 +21,7 @@ describe('cachegoose', () => {
     db.on('open', done);
 
     RecordSchema = new Schema({
-      _id: { type: mongoose.Mixed, default: mongodb.ObjectId },
+      _id: { type: mongoose.Mixed, default: mongoose.Types.ObjectId },
       num: Number,
       str: String,
       date: {
