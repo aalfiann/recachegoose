@@ -21,6 +21,7 @@ describe('cachegoose', () => {
     db.on('open', done);
 
     RecordSchema = new Schema({
+      _id: { type: mongoose.Mixed, default: mongoose.Types.ObjectId },
       num: Number,
       str: String,
       date: {
@@ -374,6 +375,40 @@ describe('cachegoose', () => {
     const originalConstructor = originalRes[0]._id.constructor.name.should;
     const cachedConstructor = cachedRes[0]._id.constructor.name.should;
     originalConstructor.should.deepEqual(cachedConstructor);
+  });
+
+  it('should return same _id when not ObjectId instance for lean', async () => {
+    const records = [{
+      _id: 'abcdefghijkl',
+      num: 111,
+      str: 'foo'
+    }, {
+      _id: 2,
+      num: 222,
+      str: 'bar'
+    }, {
+      _id: undefined,
+      num: 333,
+      str: 'baz'
+    }, {
+      _id: null,
+      num: 444,
+      str: 'hello'
+    }];
+    await Record.create(records);
+    const originalRes = await getAllLean(60);
+    const cachedRes = await getAllLean(60);
+
+    originalRes.length.should.equal(cachedRes.length);
+    JSON.stringify(originalRes).should.equal(JSON.stringify(cachedRes));
+
+    for (let idx = 0; idx < originalRes.length; idx++) {
+      if (originalRes[idx]._id instanceof mongoose.Types.ObjectId) {
+        const originalConstructor = originalRes[idx]._id.constructor.name.should;
+        const cachedConstructor = cachedRes[idx]._id.constructor.name.should;
+        originalConstructor.should.deepEqual(cachedConstructor);
+      }
+    }
   });
 });
 

@@ -14,11 +14,20 @@ module.exports = function (mongoose, cachedResults) {
 
 function recoverObjectId(mongoose) {
   return data => {
-    if (!data._id) {
+    const {
+      ObjectId
+    } = mongoose.Types;
+    const {
+      _id
+    } = data;
+
+    const isValidObjectId = ObjectId.isValid(_id) && new ObjectId(_id).toString() === _id;
+
+    if (!isValidObjectId) {
       return data;
     }
 
-    data._id = new mongoose.Types.ObjectId(data._id);
+    data._id = new ObjectId(_id);
     return data;
   };
 }
