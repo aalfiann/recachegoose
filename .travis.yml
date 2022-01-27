@@ -3,12 +3,15 @@ node_js:
   - "node"
   - "12"
   - "10"
+env:
+  global:
+    - NODE_ENV=development
 services:
   - mongodb
 before_install:
   - npm install -g npm@latest
 install:
-  - npm install --dev
+  - npm install
 script:
   - npm test
 after_success: npm run coverage
