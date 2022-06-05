@@ -21,9 +21,9 @@ function recoverObjectId(mongoose) {
       _id
     } = data;
 
-    const isValidObjectId = ObjectId.isValid(_id) && new ObjectId(_id).toString() === _id;
+    const isSameObjectId = mongoose.isValidObjectId(_id) && new ObjectId(_id).toString() === _id;
 
-    if (!isValidObjectId) {
+    if (!isSameObjectId) {
       return data;
     }
 

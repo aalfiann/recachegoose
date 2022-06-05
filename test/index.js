@@ -394,6 +394,18 @@ describe('cachegoose', () => {
       _id: null,
       num: 444,
       str: 'hello'
+    }, {
+      _id: '61e9d74451ffc373968b144e',
+      num: 555,
+      str: 'world'
+    }, {
+      _id: 40549748900222,
+      num: 666,
+      str: 'id out of range'
+    }, {
+      _id: 'abcdefghijklm',
+      num: 777,
+      str: 'id not 12 bytes and not 24 hex chars'
     }];
     await Record.create(records);
     const originalRes = await getAllLean(60);
