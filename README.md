@@ -3,6 +3,7 @@
 - Removed old libraries
 - Fixing all vulnerables
 - Up to date
+- Typescript [support](https://github.com/xrip/cachegoose)
 - Replace [cacheman](https://github.com/cayasso/cacheman) with [recacheman](https://github.com/aalfiann/recacheman)
 
 # recachegoose #
