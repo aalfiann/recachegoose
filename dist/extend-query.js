@@ -1,22 +1,17 @@
 'use strict';
 
 const generateKey = require('./generate-key');
-
 const recoverObjectId = require('./recover-objectid');
-
 module.exports = function (mongoose, cache) {
   const exec = mongoose.Query.prototype.exec;
-
   mongoose.Query.prototype.exec = function (op, callback = function () {}) {
     if (!this.hasOwnProperty('_ttl')) return exec.apply(this, arguments);
-
     if (typeof op === 'function') {
       callback = op;
       op = null;
     } else if (typeof op === 'string') {
       this.op = op;
     }
-
     const key = this._key || this.getCacheKey();
     const ttl = this._ttl;
     const isCount = ['count', 'countDocuments', 'estimatedDocumentCount'].includes(this.op);
@@ -30,13 +25,10 @@ module.exports = function (mongoose, cache) {
             callback(null, cachedResults);
             return resolve(cachedResults);
           }
-
           if (!isLean) {
             const constructor = mongoose.model(model);
-
             if (Array.isArray(cachedResults)) {
               const l = cachedResults.length;
-
               for (let i = 0; i < l; i++) {
                 cachedResults[i] = hydrateModel(constructor)(cachedResults[i]);
               }
@@ -46,11 +38,9 @@ module.exports = function (mongoose, cache) {
           } else {
             cachedResults = recoverObjectId(mongoose, cachedResults);
           }
-
           callback(null, cachedResults);
           return resolve(cachedResults);
         }
-
         exec.call(this).then(results => {
           cache.set(key, results, ttl, () => {
             callback(null, results);
@@ -63,18 +53,15 @@ module.exports = function (mongoose, cache) {
       });
     });
   };
-
   mongoose.Query.prototype.cache = function (ttl = 60, customKey = '') {
     if (typeof ttl === 'string') {
       customKey = ttl;
       ttl = 60;
     }
-
     this._ttl = ttl;
     this._key = customKey;
     return this;
   };
-
   mongoose.Query.prototype.getCacheKey = function () {
     const key = {
       model: this.model.modelName,
@@ -91,7 +78,6 @@ module.exports = function (mongoose, cache) {
     return generateKey(key);
   };
 };
-
 function hydrateModel(constructor) {
   return data => {
     return constructor.hydrate(data);
