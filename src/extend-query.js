@@ -38,7 +38,7 @@ module.exports = function(mongoose, cache) {
                 cachedResults[i] = hydrateModel(constructor)(cachedResults[i]);
               }
             } else {
-              hydrateModel(constructor)(cachedResults);
+              cachedResults = hydrateModel(constructor)(cachedResults);
             }
           } else {
             cachedResults = recoverObjectId(mongoose, cachedResults);
