@@ -1,6 +1,6 @@
 {
   "name": "recachegoose",
-  "version": "9.2.0",
+  "version": "9.2.1",
   "description": "Mongoose caching that actually works.",
   "main": "index.js",
   "types": "index.d.ts",
