@@ -16,7 +16,7 @@ module.exports = function (mongoose, cache) {
     const ttl = this._ttl;
     const isCount = ['count', 'countDocuments', 'estimatedDocumentCount'].includes(this.op);
     const isLean = this._mongooseOptions.lean;
-    const model = this.model.modelName;
+    const model = this.model;
     return new Promise((resolve, reject) => {
       cache.get(key, (err, cachedResults) => {
         //eslint-disable-line handle-callback-err
@@ -26,7 +26,7 @@ module.exports = function (mongoose, cache) {
             return resolve(cachedResults);
           }
           if (!isLean) {
-            const constructor = mongoose.model(model);
+            const constructor = model;
             if (Array.isArray(cachedResults)) {
               const l = cachedResults.length;
               for (let i = 0; i < l; i++) {
