@@ -53,7 +53,7 @@ describe('cachegoose', () => {
   });
 
   it('should have cache method after initialization', () => {
-    Record.find({}).cache.should.be.a.Function;
+    Record.find({}).cache.should.be.a.Function();
   });
 
   it('should cache a simple query that uses callbacks', (done) => {
@@ -104,8 +104,8 @@ describe('cachegoose', () => {
         first.constructor.name.should.equal('model');
         cachedFirst.constructor.name.should.equal('model');
 
-        res[0].isNew.should.be.false;
-        res2[0].isNew.should.be.false;
+        res[0].isNew.should.be.false();
+        res2[0].isNew.should.be.false();
 
         done();
       });
@@ -188,12 +188,12 @@ describe('cachegoose', () => {
 
   it('should cache a findOne query', async () => {
     const one = await getOne(60);
-    Boolean(one).should.be.true;
+    Boolean(one).should.be.true();
 
     await Record.deleteMany();
 
     const cachedOne = await getOne(60);
-    Boolean(cachedOne).should.be.true;
+    Boolean(cachedOne).should.be.true();
   });
 
   it('should cache a regex condition properly', async () => {
@@ -227,7 +227,7 @@ describe('cachegoose', () => {
         getAll(1, (err, res) => {
           if (err) return done(err);
 
-          Boolean(res._fromCache).should.be.false;
+          Boolean(res._fromCache).should.be.false();
           done();
         });
       }, 1200);

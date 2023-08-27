@@ -112,14 +112,14 @@
         "allowParens": true
       }
     ],
-    "no-console": [
-      "error",
-      {
-        "allow": [
-          "error"
-        ]
-      }
-    ],
+    // "no-console": [
+    //   "error",
+    //   {
+    //     "allow": [
+    //       "error"
+    //     ]
+    //   }
+    // ],
     "no-const-assign": "error",
     "no-debugger": "error",
     "no-empty": "error",

@@ -1,5 +1,5 @@
 > This is a fork version of [cachegoose](https://github.com/boblauer/cachegoose) with following differences :
-- Minimum NodeJS 12
+- Minimum NodeJS 14
 - Removed old libraries
 - Fixing all vulnerables
 - Up to date
@@ -62,7 +62,21 @@ cachegoose(mongoose, {
   host: 'localhost'
 });
 
-// or with redis connection string
+// or with redis url connection string
+// redis[s]://[[username][:password]@][host][:port][/db-number]
+cachegoose(mongoose, {
+  engine: 'redis',
+  url: 'redis://localhost:6379'
+});
+
+// or with redis client with connection string
+// backwards compatibility
+cachegoose(mongoose, {
+  engine: 'redis',
+  client: 'redis://localhost:6379'
+});
+
+// backwards compatibility
 cachegoose(mongoose, {
   engine: 'redis',
   client: require('redis').createClient('redis://localhost:6379')
