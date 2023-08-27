@@ -9,7 +9,7 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.19.0   # Primary execution image
-      - image: cimg/mongo:5.0
+      - image: circleci/mongo:5.0
     steps:
       - checkout
       - run:
