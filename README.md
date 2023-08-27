@@ -145,7 +145,7 @@ If you call `cachegoose.clearCache(null, cb)` without passing a cache key as the
 When a document is returned from the cache, cachegoose will [hydrate](http://mongoosejs.com/docs/api.html#model_Model.hydrate) it, which initializes it's virtuals/methods. Hydrating a populated document will discard any populated fields (see [Automattic/mongoose#4727](https://github.com/Automattic/mongoose/issues/4727)). To cache populated documents without losing child documents, you must use `.lean()`, however if you do this you will not be able to use any virtuals/methods (it will be a plain object).
 
 ## Test ##
-For development mode, you have to use minimum nodejs 12
+For development mode, you have to use minimum nodejs 14
 ```
 npm test
 ```
