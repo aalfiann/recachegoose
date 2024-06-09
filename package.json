@@ -1,6 +1,6 @@
 {
   "name": "recachegoose",
-  "version": "10.0.1",
+  "version": "11.0.0",
   "description": "Mongoose caching that actually works.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -14,12 +14,11 @@
     "sha1": "^1.1.1"
   },
   "peerDependencies": {
-    "mongoose": "^5.0.1 || ^6.0.0 || ^7.0.0"
+    "mongoose": "^5.0.1 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.4",
-    "coveralls": "^3.1.0",
+    "@babel/cli": "^7.24.7",
+    "@babel/core": "^7.24.7",
     "eslint": "^8.48.0",
     "eslint-plugin-mocha": "^10.1.0",
     "mocha": "^10.2.0",
@@ -30,7 +29,7 @@
   },
   "scripts": {
     "test": "npm run lint && npm run build && nyc --reporter=html --reporter=text mocha --exit",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov",
     "lint": "eslint .",
     "build": "babel src --out-dir dist",
     "prepublish": "npm run lint && npm run build"

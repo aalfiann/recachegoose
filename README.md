@@ -1,5 +1,5 @@
 > This is a fork version of [cachegoose](https://github.com/boblauer/cachegoose) with following differences :
-- Minimum NodeJS 14
+- Minimum NodeJS 16
 - Removed old libraries
 - Fixing all vulnerables
 - Up to date
