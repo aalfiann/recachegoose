@@ -8,7 +8,7 @@ workflows:
 jobs:
   build:
     docker:
-      - image: cimg/node:16.19.0   # Primary execution image
+      - image: cimg/node:18.20.3   # Primary execution image
       - image: circleci/mongo:5.0
     steps:
       - checkout
