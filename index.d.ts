@@ -10,6 +10,7 @@ declare module 'recachegoose' {
 		namespace Types {
 			interface IOptions {
 				engine?: string
+				count?: number
 				port?: number
 				host?: string
 				password?: string,
