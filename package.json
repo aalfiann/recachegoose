@@ -8,7 +8,7 @@
     "test": "test"
   },
   "dependencies": {
-    "recacheman": "^2.3.3",
+    "recacheman": "^2.3.4",
     "recacheman-file": "^0.2.5",
     "recacheman-redis": "^3.0.1",
     "sha1": "^1.1.1"
